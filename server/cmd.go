@@ -1,8 +1,8 @@
 package server
 
 import (
-	"io"
 	"encoding/json"
+	"io"
 
 	"github.com/ngaut/log"
 )
@@ -20,8 +20,8 @@ func WriteCmdRecord(connID uint64, query string, args ...interface{}) {
 	if CommandRecordWriter != nil {
 		cmd := &CmdRecord{
 			ConnID: connID,
-			Query: query,
-			Args: args,
+			Query:  query,
+			Args:   args,
 		}
 		b, err := json.Marshal(cmd)
 		if err != nil {

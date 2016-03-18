@@ -8,14 +8,16 @@ import (
 	"runtime"
 	"syscall"
 
+	"bufio"
 	"github.com/ngaut/log"
 	"github.com/pingcap/mpdriver/server"
-	"bufio"
 )
 
 var (
 	logLevel   = flag.String("L", "debug", "log level: info, debug, warn, error, fatal")
 	port       = flag.String("P", "4000", "mp server port")
+	addr       = flag.String("A", "127.0.0.1:3306", "mysql address")
+	pass       = flag.String("p", "", "mysql password")
 	recordPath = flag.String("R", "cmd_record.json", "command record path")
 )
 
@@ -27,7 +29,7 @@ func main() {
 		LogLevel: *logLevel,
 	}
 	log.SetLevelByString(cfg.LogLevel)
-	driver := &server.MysqlDriver{Addr: "127.0.0.1:3306"}
+	driver := &server.MysqlDriver{Addr: *addr, Pass: *pass}
 	svr, err := server.NewServer(cfg, driver)
 	if err != nil {
 		log.Fatal(err)
@@ -58,6 +60,3 @@ func main() {
 
 	log.Error(svr.Run())
 }
-
-
-
